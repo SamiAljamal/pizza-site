@@ -26,13 +26,22 @@ order.prototype.sizePrice = function(pizzaSize){
 
 $(document).ready(function(){
   var totalOrder;
+  var toppingArray;
   $("form#order").submit(function(event){
     event.preventDefault();
     //get toppings value
     var inputTopping = 0;
-    $('input[type=checkbox]').each(function () {
-    this.checked ? inputTopping += 1 : inputTopping += 0;
+    var toppingArray=[];
+    $('.chcbox:checked').each(function () {
+      inputTopping += 1;
   });
+  alert(inputTopping);
+  $('.chcbox:checked').each(function () {
+    toppingArray.push($(this).val());
+  });
+  alert(toppingArray);
+
+
     var inputSize = parseInt($("#size").val());
     var totalOrder= new order();
     var toppingPrice = totalOrder.toppingsPrice(inputTopping);
