@@ -58,14 +58,12 @@ $(document).ready(function(){
     var toppingsArray=[]
     toppingsArray.push(toppingArrayVeggies);
     toppingsArray.push(toppingArrayMeat);
-    alert(toppingsArray);
     var inputSize = parseInt($("#size").val());
     var totalOrder= new order();
     var toppingPriceMeat = totalOrder.toppingsPriceMeat(inputToppingMeat);
     var toppingPriceVeggie = totalOrder.toppingsPriceVeggies(inputToppingVeggies);
     var pizzaSizePrice = totalOrder.sizePrice(inputSize);
     var totalPrice = totalOrder.totalPrice(toppingPriceMeat,toppingPriceVeggie,pizzaSizePrice);
-    alert(totalPrice);
     $(".toppings").text(toppingsArray);
     $(".price").text(totalPrice);
     $("#myModal").modal("show");
