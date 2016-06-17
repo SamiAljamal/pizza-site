@@ -5,11 +5,11 @@ function order(){
   this.pizzaSize = 0;
   this.price = 0;
 }
-//prototype to calculate the total price of toppings
+//prototype to calculate the total price of meat toppings
 order.prototype.toppingsPriceMeat = function(toppings){
   return this.meatToppings = 1 * toppings;
 }
-
+//prototype to calculate the total price of veggie toppings
 order.prototype.toppingsPriceVeggies = function(toppings){
   return this.veggieToppings = .25 * toppings;
 }
@@ -28,6 +28,7 @@ order.prototype.sizePrice = function(pizzaSize){
   }
   return this.pizzaSize;
 }
+//prototype to calculate total price.
  order.prototype.totalPrice = function(meatToppings,veggieToppings,size){
    return this.price = meatToppings + veggieToppings + size;
  }
@@ -55,15 +56,20 @@ $(document).ready(function(){
     $('.chcbox:checked').each(function () {
       toppingArrayMeat.push($(this).val());
     });
+    // create array that pushes all selected topping into it
     var toppingsArray=[]
     toppingsArray.push(toppingArrayVeggies);
     toppingsArray.push(toppingArrayMeat);
+
     var inputSize = parseInt($("#size").val());
+    // create new instance of the object
     var totalOrder= new order();
+
     var toppingPriceMeat = totalOrder.toppingsPriceMeat(inputToppingMeat);
     var toppingPriceVeggie = totalOrder.toppingsPriceVeggies(inputToppingVeggies);
     var pizzaSizePrice = totalOrder.sizePrice(inputSize);
     var totalPrice = totalOrder.totalPrice(toppingPriceMeat,toppingPriceVeggie,pizzaSizePrice);
+    //display results
     $(".toppings").text(toppingsArray);
     $(".price").text(totalPrice);
     $("#myModal").modal("show");
