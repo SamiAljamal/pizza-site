@@ -4,8 +4,21 @@ function order(){
   this.pizzaSize = 0;
   this.price = 0;
 }
+//prototype to calculate the total price of toppings
 order.prototype.toppingsPrice = function(toppings){
   return this.toppings = 1.50 * toppings;
+}
+
+//prototype to calculate price according to the size of the pizza.
+order.prototype.sizePrice = function(pizzaSize){
+  if(pizzaSize === 1){
+    this.pizzaSize = 8;
+  } else if (pizzaSize === 2) {
+    this.pizzaSize = 10;
+  } else {
+    this.pissaSize = 12;
+  }
+  return this.pizzaSize;
 
 }
 
@@ -23,5 +36,7 @@ $(document).ready(function(){
     var totalOrder= new order();
     var toppingPrice = totalOrder.toppingsPrice(inputTopping);
     alert(toppingPrice);
+    var pizzaSizePrice = totalOrder.sizePrice(inputSize);
+    alert (pizzaSizePrice);
   });
 });
