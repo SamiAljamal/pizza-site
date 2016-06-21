@@ -1,37 +1,22 @@
-// Business logic
-function order(){
-  this.MeatToppings = 0;
-  this.veggieToppings = 0;
-  this.pizzaSize = 0;
-  this.price = 0;
-}
-//prototype to calculate the total price of meat toppings
-order.prototype.toppingsPriceMeat = function(toppings){
-  return this.meatToppings = 1 * toppings;
-}
-//prototype to calculate the total price of veggie toppings
-order.prototype.toppingsPriceVeggies = function(toppings){
-  return this.veggieToppings = .25 * toppings;
-}
-
-//prototype to calculate price according to the size of the pizza.
-order.prototype.sizePrice = function(pizzaSize){
-  if(pizzaSize === 1){
-    this.pizzaSize = 5;
-  } else if (pizzaSize === 2) {
-    this.pizzaSize = 7;
-  } else if (pizzaSize === 3){
-      this.pizzaSize = 9;
+function order(meatToppings,veggieToppings,pizzaSize){
+  this.meatToppings = meatToppings;
+  this.veggieToppings = veggieToppings;
+  this.pizzaSize = pizzaSize;
+};
+order.prototype.price = function(){
+  if(this.pizzaSize === 1){
+  sizePrice= 5;
+  } else if (this.pizzaSize === 2) {
+    sizePrice = 7;
+  } else if (this.pizzaSize === 3){
+      sizePrice = 9;
   }
    else{
-    this.pizzaSize = 11;
+    sizePrice= 11;
   }
-  return this.pizzaSize;
-}
-//prototype to calculate total price.
- order.prototype.totalPrice = function(meatToppings,veggieToppings,size){
-   return this.price = meatToppings + veggieToppings + size;
- }
+  return (this.meatToppings.length * 1) + (this.veggieToppings.length * .25) + sizePrice;
+};
+
 // front-end logic
 $(document).ready(function(){
   var totalOrder;
@@ -39,41 +24,27 @@ $(document).ready(function(){
   $("form#order").submit(function(event){
     event.preventDefault();
     //get topping values for veggies
-    var inputToppingVeggies= 0;
-    var toppingArrayVeggies = []
-    $('.chcbox1:checked').each(function(){
-      inputToppingVeggies += 1;
-    });
+    var veggieToppings = []
     $('.chcbox1:checked').each(function () {
-      toppingArrayVeggies.push($(this).val());
+    veggieToppings.push($(this).val());
     });
     //get toppings value for meat
-    var inputToppingMeat = 0;
-    var toppingArrayMeat=[];
+
+    var meatToppings=[];
     $('.chcbox:checked').each(function () {
-      inputToppingMeat += 1;
-    });
-    $('.chcbox:checked').each(function () {
-      toppingArrayMeat.push($(this).val());
+      meatToppings.push($(this).val());
     });
     // create array that pushes all selected topping into it
     var toppingsArray=[]
-    toppingsArray.push(toppingArrayVeggies);
-    toppingsArray.push(toppingArrayMeat);
+    toppingsArray.push(veggieToppings);
+    toppingsArray.push(meatToppings);
 
-    var inputSize = parseInt($("#size").val());
-    // create new instance of the object
-    var totalOrder= new order();
+    var pizzaSize = parseInt($("#size").val());
 
-    var toppingPriceMeat = totalOrder.toppingsPriceMeat(inputToppingMeat);
-    var toppingPriceVeggie = totalOrder.toppingsPriceVeggies(inputToppingVeggies);
-    var pizzaSizePrice = totalOrder.sizePrice(inputSize);
-    var totalPrice = totalOrder.totalPrice(toppingPriceMeat,toppingPriceVeggie,pizzaSizePrice);
-    //display results
+    var customerOrder= new order(meatToppings,veggieToppings,pizzaSize);
+
     $(".toppings").text(toppingsArray);
-    $(".price").text(totalPrice);
+    $(".price").text(customerOrder.price());
     $("#myModal").modal("show");
-
-
   });
 });
